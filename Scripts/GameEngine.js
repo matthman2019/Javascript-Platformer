@@ -1,28 +1,28 @@
-const gameCanvas = document.getElementById("gameCanvas");
-const ctx = gameCanvas.getContext("2d");
+export const gameCanvas = document.getElementById("gameCanvas");
+export const ctx = gameCanvas.getContext("2d");
 
-let gameWidth = window.innerWidth;
-let gameHeight = window.innerHeight;
+export let gameWidth = window.innerWidth;
+export let gameHeight = window.innerHeight;
 
-let FPS = 60;
-let bgColor = 'blue';
+export let FPS = 60;
+export let bgColor = 'blue';
 
 gameCanvas.width = gameWidth;
 gameCanvas.height = gameHeight;
 
 // noneFunction is a default value for callbacks (to prevent errors)
-const noneFunction = ()=>{};
+export const noneFunction = ()=>{};
 
-function widthPercentToPixels(percent) {
+export function widthPercentToPixels(percent) {
     return gameCanvas.width * (percent / 100);
 }
 
-function heightPercentToPixels(percent) {
+export function heightPercentToPixels(percent) {
     return gameCanvas.height * (percent / 100);
 }
 
 // base class for drawable objects. They all need x, y, a color, and a z. (Z is depth for sorting order)
-class drawObject {
+export class drawObject {
     constructor(x, y, color='black', z='0') {
         this.x = x;
         this.y = y;
@@ -32,7 +32,7 @@ class drawObject {
 }
 
 // rect is a rectangle class. Top-left position (x, y), width w, and height h.
-class rect extends drawObject{
+export class rect extends drawObject{
     constructor(x, y, w, h, color='black', z='0') {
         super(x, y, color, z);
         this.w = w;
@@ -46,7 +46,7 @@ class rect extends drawObject{
 }
 
 // circle is a drawnObject class for a circle. It has position (x, y) and a radius of r.
-class circle extends drawObject{
+export class circle extends drawObject{
     constructor(x, y, r, color='black', z='0') {
         super(x, y, color, z)
         this.r = r;
@@ -62,7 +62,7 @@ class circle extends drawObject{
 }
 
 // sprite is the class for things that run in-game. All scripting will be inside its callbacks.
-class sprite {
+export class sprite {
     constructor(updateCallback=noneFunction, startCallback=noneFunction, updateAfterFrame=noneFunction) {
         this.update = updateCallback;
         this.start = startCallback;
@@ -73,7 +73,7 @@ class sprite {
 }
 
 // drawnSprite is the class for sprites that are drawn.
-class drawnSprite extends sprite {
+export class drawnSprite extends sprite {
     constructor(shape, updateCallback=noneFunction, startCallback=noneFunction, updateAfterFrame=noneFunction) {
         super(updateCallback, startCallback, updateAfterFrame);
         // run startCallback
@@ -100,7 +100,7 @@ class drawnSprite extends sprite {
 
 
 // I have to do special things with runArray so I made it a class
-class runArrayClass {
+export class runArrayClass {
     constructor(items) {
         this.items = items
     }
@@ -136,18 +136,18 @@ class runArrayClass {
 
 
 // everything that runs needs to be in runArray
-let runArray = new runArrayClass([]);
+export let runArray = new runArrayClass([]);
 
 
 // main loop
-function mainLoop() {
+export function mainLoop() {
     // sorting is done in the runArray object
 
     ctx.fillStyle = bgColor;
     ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
     // run update code and render
-    for (thing of runArray.items) {
+    for (let thing of runArray.items) {
         // if it's a draw object, run
         if (thing instanceof drawnSprite) {
             thing.update(thing);
