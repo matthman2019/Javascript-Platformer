@@ -131,6 +131,7 @@ export class runArrayClass {
 
     push(thing) {
         this.items.push(thing);
+        this.sortItems();
     }
 }
 
